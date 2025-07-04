@@ -1,0 +1,79 @@
+'''
+texto 
+2025.07.04
+Luiz.Carlos.Oliveira.Neto
+'''
+#  objetivo: Um jogo de Pedregulho, Papel e Tesoura com giria brasileira.
+
+#import random  # Importa a biblioteca para usar escolhas aleatórias
+
+#  1. TIPOS DE DADOS E VARIÁVEIS
+opcoes = ["pedregulho", "sulfite", "cortador"]  # Lista (list) com strings
+pontos_jogador = 0  # Inteiro (int)
+pontos_computador = 0  # Inteiro (int)
+
+#  7. SUB-ROTINAS (Funções)
+def jogada_Bot():
+    #  2. OPERADORES (chamada de função random.choice)
+    return random.choice(opcoes)
+
+#  7. SUB-ROTINAS (Funções)
+def decidir_vencedor(jogador, Bot):
+    #  5. ESTRUTURAS DE DECISÃO
+    if jogador == Bot:
+        return "empate"
+    elif (jogador == "pedregulho" and Bot == "cortador") or \
+         (jogador == "sulfite" and Bot == "pedregulho") or \
+         (jogador == "cortador" and Bot == "sulfite"):
+        return "jogador"
+    else:
+        return "Bot"
+
+#  7. SUB-ROTINAS (Funções)
+def jogar():
+    global pontos_jogador, pontos_computador  # ✅ 1. VARIÁVEIS GLOBAIS
+
+    # 6. ESTRUTURAS DE REPETIÇÃO
+    while True:
+        #  4. ENTRADA DE DADOS
+        jogador = input("Escolha pedregulho, sulfite ou cortador: ").lower()  # ✅ 1. str
+
+        #  5. ESTRUTURAS DE DECISÃO + ✅ 2. OPERADOR LÓGICO "not in"
+        if jogador not in opcoes:
+            #  3. SAÍDA DE DADOS
+            print("Ih Zé errou. Tente novamente.")
+            continue  #  6. REPETIÇÃO (volta para o início do while)
+        
+        # Computador faz a jogada
+        Bot = jogada_Bot()
+        
+        #  3. SAÍDA DE DADOS (com f-strings)
+        print(f"\nVocê jogou: {jogador}")
+        print(f"Computador jogou: {Bot}")
+        
+        # Verifica vencedor
+        vencedor = decidir_vencedor(jogador, Bot)
+
+        #  5. ESTRUTURAS DE DECISÃO
+        if vencedor == "empate":
+            print("Ih empate Zé!")
+        elif vencedor == "jogador":
+            print("Você venceu Zé!")
+            #  2. OPERADORES ARITMÉTICOS
+            pontos_jogador += 1
+        else:
+            print("O Bot venceu!")
+            pontos_computador += 1
+        
+        #  3. SAÍDA DE DADOS
+        print(f"\nPlacar - Você: {pontos_jogador} | Bot: {pontos_computador}")
+        
+        #  4. ENTRADA DE DADOS
+        continuar = input("\nVai jogar de novo Zé? (s/n): ").lower()
+        # 5. ESTRUTURA DE DECISÃO
+        if continuar != 's':
+            print("Valeu por jogar Zé!")
+            break  #  6. ESTRUTURAS DE REPETIÇÃO
+
+#  7. SUB-ROTINA sendo chamada
+jogar()
